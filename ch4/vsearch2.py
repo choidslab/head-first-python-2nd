@@ -7,8 +7,3 @@ def search4vowels(phrase: str) -> set:  # Function Annotation 함수의 인자 �
 def search4letters(phrase: str, letters: str='aeiou') -> set:
     """Return a set of the 'letters' found in 'phrases'."""
     return set(letters).intersection(set(phrase))
-
-
-print(search4vowels(input('Provide a word to search for vowels: ')))
-print(search4letters(input('Provide a word to search for vowels: '), 'test string'))
-print(search4letters(input('Provide a word to search for vowels: ')))
