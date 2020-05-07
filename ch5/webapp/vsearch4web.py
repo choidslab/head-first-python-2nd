@@ -27,4 +27,5 @@ def entry_page():
     return render_template('entry.html', the_title='Welcome to search4letters on the DSLab web!')
 
 
-app.run(debug=True)  # debug mode on
+if __name__ == "__main__":
+    app.run(debug=True)  # debug mode on
