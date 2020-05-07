@@ -1,11 +1,7 @@
-from flask import Flask, render_template, request, redirect
+# from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request
 from ch4.vsearch2 import search4letters
 app = Flask(__name__)
-
-
-@app.route('/')  # decorator,route() 파라미터 값 = URL을 의미
-def hello_world():
-    return redirect('/entry')
 
 
 @app.route('/dslab')
@@ -25,6 +21,7 @@ def do_search():
     return render_template('results.html', the_title=title, the_phrase=phrase, the_letters=letters, the_results=results)
 
 
+@app.route('/')  # Flask에서 함수는 여러개의 URL 값을 가질 수 있다. decorator를 통해서!
 @app.route('/entry')
 def entry_page():
     return render_template('entry.html', the_title='Welcome to search4letters on the DSLab web!')
