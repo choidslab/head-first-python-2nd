@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from ch4.vsearch2 import search4letters
 app = Flask(__name__)
 
 
 @app.route('/')  # decorator,route() 파라미터 값 = URL을 의미
 def hello_world():
-    return 'Hello World from Flask!'
+    return redirect('/entry')
 
 
 @app.route('/dslab')
@@ -27,7 +27,7 @@ def do_search():
 
 @app.route('/entry')
 def entry_page():
-    return render_template('entry.html', the_title='Welcome to search4letters on the web!')
+    return render_template('entry.html', the_title='Welcome to search4letters on the DSLab web!')
 
 
 app.run(debug=True)  # debug mode on
