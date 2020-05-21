@@ -30,18 +30,19 @@ def entry_page():
 
 @app.route('/viewlog')
 def view_log():
+    contents = list()
     with open('./vsearch.log', 'r') as viewlog:
-        contents = viewlog.read()
-        return escape(contents)
-        # return render_template('viewlog.html', the_title='')
-
+        for line in viewlog:
+            contents.append([])
+            for item in line.split(' | '):
+                contents[-1].append(escape(item))
+            # print(contents)
+    titles = ('Form Data', 'Remote_IP_addr', 'User_agent', 'Results')
+    return render_template('viewlog.html', the_title='View Log', the_row_titles=titles, the_data=contents)
 
 def log_request(req, res):
     with open('./vsearch.log', 'a') as vlog:
-        print(req.form, file=vlog, end=' | ')
-        print(req.remote_addr, file=vlog, end=' | ')
-        print(req.user_agent, file=vlog, end=' | ')
-        print(res, file=vlog)
+        print(req.form, req.remote_addr, req.user_agent, res, file=vlog, sep=' | ')
 
 
 if __name__ == "__main__":
