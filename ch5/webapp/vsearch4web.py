@@ -38,7 +38,10 @@ def view_log():
 
 def log_request(req, res):
     with open('./vsearch.log', 'a') as vlog:
-        print(req, res, file=vlog)
+        print(req.form, file=vlog, end=' | ')
+        print(req.remote_addr, file=vlog, end=' | ')
+        print(req.user_agent, file=vlog, end=' | ')
+        print(res, file=vlog)
 
 
 if __name__ == "__main__":
