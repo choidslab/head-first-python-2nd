@@ -1,5 +1,5 @@
 # from flask import Flask, render_template, request, redirect
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, escape
 from ch4.vsearch2 import search4letters
 app = Flask(__name__)
 
@@ -17,6 +17,7 @@ def do_search():
     letters = request.form['letters']
     title = 'Here are your results:'
     results = str(search4letters(phrase, letters))
+    log_request(request, results)
 
     return render_template('results.html', the_title=title, the_phrase=phrase, the_letters=letters, the_results=results)
 
@@ -25,6 +26,19 @@ def do_search():
 @app.route('/entry')
 def entry_page():
     return render_template('entry.html', the_title='Welcome to search4letters on the DSLab web!')
+
+
+@app.route('/viewlog')
+def view_log():
+    with open('./vsearch.log', 'r') as viewlog:
+        contents = viewlog.read()
+        return escape(contents)
+        # return render_template('viewlog.html', the_title='')
+
+
+def log_request(req, res):
+    with open('./vsearch.log', 'a') as vlog:
+        print(req, res, file=vlog)
 
 
 if __name__ == "__main__":
