@@ -1,6 +1,7 @@
 # from flask import Flask, render_template, request, redirect
 from flask import Flask, render_template, request, escape
 from ch4.vsearch2 import search4letters
+import mysql.connector
 app = Flask(__name__)
 
 
@@ -40,9 +41,34 @@ def view_log():
     titles = ('Form Data', 'Remote_IP_addr', 'User_agent', 'Results')
     return render_template('viewlog.html', the_title='View Log', the_row_titles=titles, the_data=contents)
 
+
 def log_request(req, res):
-    with open('./vsearch.log', 'a') as vlog:
-        print(req.form, req.remote_addr, req.user_agent, res, file=vlog, sep=' | ')
+    # with open('./vsearch.log', 'a') as vlog:
+    #     print(req.form, req.remote_addr, req.user_agent, res, file=vlog, sep=' | ')
+
+    # db 정보 세팅
+    # db 연결
+    # cursor 생성
+    # 쿼리 생성
+    # 쿼리 전송
+    # commit
+    # cursor close
+    # db connection close
+
+    dbconfig = {
+        'host': '127.0.0.1',
+        'user': 'vsearch',
+        'password': 'vsearchpasswd',
+        'database': 'vsearchlogDB',
+    }
+
+    conn = mysql.connector.connect(**dbconfig)
+    cursor = conn.cursor()
+    _SQL = """insert into log(phrase, letters, ip, browser_string, results) values(%s, %s, %s, %s, %s)"""
+    cursor.execute(_SQL, (req.form['phrase'], req.form['letters'], req.remote_addr, req.user_agent.browser, res))
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 
 if __name__ == "__main__":
