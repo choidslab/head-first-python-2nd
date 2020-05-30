@@ -65,4 +65,4 @@ def log_request(req, res):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)  # debug mode on
+    app.run(host='0.0.0.0')  # 외부 접속 가능하도록 설정
