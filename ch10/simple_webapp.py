@@ -33,7 +33,10 @@ def check_status():
 
 @app.route('/page1')
 def page1():
-    return 'This is page 1.'
+    # return 'This is page 1.'
+    if not check_logged_in():
+        return 'You are Not logged in!'
+    return 'You are now logged in, page1'
 
 
 @app.route('/page2')
@@ -44,6 +47,12 @@ def page2():
 @app.route('/page3')
 def page3():
     return 'This is page 3.'
+
+
+def check_logged_in():
+    if 'logged_in' in session:
+        return True
+    return False
 
 
 if __name__ == "__main__":
